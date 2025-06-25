@@ -14,10 +14,11 @@ export default function registFileTools(server: McpServer) {
       },
     },
     ({ fileName, content }) => {
-      const filesPath = path.resolve('./files');
-      if (!fs.existsSync(filesPath)) fs.mkdirSync(filesPath);
-      const filePath = path.resolve(filesPath, fileName);
+      const basePath = path.resolve('./files');
+      if (!fs.existsSync(basePath)) fs.mkdirSync(basePath);
+      const filePath = path.resolve(basePath, fileName);
       fs.writeFileSync(filePath, content, "utf8");
+
       return {
         content: [
           {
