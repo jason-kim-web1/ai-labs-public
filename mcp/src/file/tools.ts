@@ -3,6 +3,8 @@ import fs from "fs";
 import path from "path";
 import { z } from "zod";
 
+const basePath = path.resolve(path.resolve(), 'files');
+
 export default function registFileTools(server: McpServer) {
   server.registerTool(
     "writeFile",
@@ -14,7 +16,6 @@ export default function registFileTools(server: McpServer) {
       },
     },
     ({ fileName, content }) => {
-      const basePath = path.resolve('./files');
       if (!fs.existsSync(basePath)) fs.mkdirSync(basePath);
       const filePath = path.resolve(basePath, fileName);
       fs.writeFileSync(filePath, content, "utf8");
@@ -39,7 +40,7 @@ export default function registFileTools(server: McpServer) {
       },
     },
     async ({ fileName }) => {
-      const filePath = path.resolve('./files', fileName);
+      const filePath = path.resolve(basePath, fileName);
       return {
         content: [
           {
